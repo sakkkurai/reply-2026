@@ -1,7 +1,14 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { SLIDES, TOTAL_SLIDES } from '../constants/slides';
+import SlideIntro from './slides/SlideIntro';
+import SlideScore from './slides/SlideScore';
 import SlidePlaceholder from './SlidePlaceholder';
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
+
+const SLIDE_COMPONENTS = {
+    1: SlideIntro,
+    2: SlideScore,
+}
 
 function SlideDeck() {
     const { id } = useParams();
@@ -26,22 +33,22 @@ function SlideDeck() {
         }
     };
 
+    const SlideComponent = SLIDE_COMPONENTS[slideId] ?? (() => <SlidePlaceholder id={currentSlide.id} title={currentSlide.title} />)
+
     return (
         <div>
-            <SlidePlaceholder id={currentSlide.id} title={currentSlide.title} />
-            <div>
-                {slideId > 1 && (
-                    <button onClick={goPrev} className='fixed left-4 top-1/2 -translate-y-1/2 z-40 p-3'>
-                        <ChevronLeft className="text-text" size={36} />
-                    </button>
-                )}
-                {slideId < TOTAL_SLIDES && slideId > 1 && (
-                    <button onClick={goNext} className='fixed right-4 top-1/2 -translate-y-1/2 z-40 p-3' >
-                        <ChevronRight className='text-text' size={36} />
-                    </button>
-                )}
-            </div>
-        </div >
+            <SlideComponent onNext={goNext} />
+            {slideId > 1 && (
+                <button onClick={goPrev} className="fixed left-4 top-1/2 -translate-y-1/2 z-40 p-3">
+                    <ChevronLeft className="text-text" size={36} />
+                </button>
+            )}
+            {slideId < TOTAL_SLIDES && slideId > 1 && (
+                <button onClick={goNext} className="fixed right-4 top-1/2 -translate-y-1/2 z-40 p-3">
+                    <ChevronRight className="text-text" size={36} />
+                </button>
+            )}
+        </div>
     );
 }
 
