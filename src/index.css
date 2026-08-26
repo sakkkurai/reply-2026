@@ -7,4 +7,10 @@
     --color-accent-peach: #FFD9B8;
     --color-accent-yellow: #FFF0B8;
     --color-text: #3A2E3A;
+    --font-script-caveat: 'Caveat', cursive;
+    --font-script-marck: 'Marck Script', cursive;
+}
+
+::selection {
+    background: color-mix(in srgb, var(--color-text) 25%, transparent);
 }
