@@ -14,7 +14,6 @@ function SlideDeck() {
     const { id } = useParams();
     const navigate = useNavigate();
     const slideId = Number(id);
-    console.log({ idFromParams: id, parsedSlideId: slideId, SLIDES });
 
     const currentSlide = SLIDES.find(s => s.id === slideId);
 
