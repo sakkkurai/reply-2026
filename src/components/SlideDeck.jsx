@@ -1,13 +1,33 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { SLIDES, TOTAL_SLIDES } from '../constants/slides';
-import SlideIntro from './slides/SlideIntro';
+import { useEffect } from 'react';
+import { useSwipeable } from 'react-swipeable';
 import SlideScore from './slides/SlideScore';
-import SlidePlaceholder from './SlidePlaceholder';
-import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
+import SlideHourPeek from './slides/SlideHourPeek';
+import { useState, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { UNCOMPLETED_HINT } from '../constants/strings';
 
 const SLIDE_COMPONENTS = {
-    1: SlideIntro,
-    2: SlideScore,
+    1: SlideScore,
+    2: SlideHourPeek,
+};
+
+function ProgressBars({ total, current }) {
+    return (
+        <div className="fixed top-4 left-4 right-4 flex gap-1 z-50">
+            {Array.from({ length: total }).map((_, i) => (
+                <div
+                    key={i}
+                    className="flex-1 h-1 rounded-full bg-text/20 overflow-hidden"
+                >
+                    <div
+                        className={`h-full bg-text transition-all duration-300 ${i <= current - 1 ? 'w-full' : 'w-0'
+                            }`}
+                    />
+                </div>
+            ))}
+        </div>
+    );
 }
 
 function SlideDeck() {
@@ -15,37 +35,92 @@ function SlideDeck() {
     const navigate = useNavigate();
     const slideId = Number(id);
 
-    const currentSlide = SLIDES.find(s => s.id === slideId);
+    const TOTAL_SLIDES = Object.keys(SLIDE_COMPONENTS).length;
 
-    if (!currentSlide) {
-        return <p>Слайд не найден!</p>
-    }
+    const [completed, setCompleted] = useState({});
+    const [showHint, setShowHint] = useState(false);
+    const isCurrentComplete = completed[slideId] ?? false;
+    const hintTimeoutRef = useRef(null);
+
+    const triggerHint = () => {
+        setShowHint(true);
+        if (hintTimeoutRef.current) clearTimeout(hintTimeoutRef.current);
+        hintTimeoutRef.current = setTimeout(() => setShowHint(false), 1200);
+    };
 
     const goNext = () => {
-        if (slideId < TOTAL_SLIDES) {
-            navigate(`/slide/${slideId + 1}`);
+        if (!isCurrentComplete) {
+            triggerHint();
+            return;
         }
+        if (slideId < TOTAL_SLIDES) navigate(`/slide/${slideId + 1}`);
     };
     const goPrev = () => {
-        if (slideId > 1) {
-            navigate(`/slide/${slideId - 1}`);
-        }
+        if (slideId > 1) navigate(`/slide/${slideId - 1}`);
     };
 
-    const SlideComponent = SLIDE_COMPONENTS[slideId] ?? (() => <SlidePlaceholder id={currentSlide.id} title={currentSlide.title} />)
+    const swipeHandlers = useSwipeable({
+        onSwipedLeft: goNext,
+        onSwipedRight: goPrev,
+        preventScrollOnSwipe: true,
+        trackMouse: false,
+    });
+
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === 'ArrowRight') goNext();
+            if (e.key === 'ArrowLeft') goPrev();
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [slideId, isCurrentComplete]);
+
+    const handleTapZone = (e) => {
+        if (e.target.closest('button, a, input, [data-no-tap-nav]')) return;
+
+        const isRightHalf = e.clientX > window.innerWidth / 2;
+        isRightHalf ? goNext() : goPrev();
+    };
+
+
+    const SlideComponent = SLIDE_COMPONENTS[slideId];
+
+    if (!SlideComponent) {
+        return <p>Слайд не найден!</p>;
+    }
+
+    const markComplete = () => {
+        setCompleted((prev) => ({ ...prev, [slideId]: true }));
+    };
 
     return (
-        <div>
-            <SlideComponent onNext={goNext} />
-            {slideId > 2 && (
-                <button onClick={goPrev} className="fixed left-4 top-1/2 -translate-y-1/2 z-40 p-3 cursor-pointer">
-                    <ChevronLeft className="text-text" size={36} />
-                </button>
-            )}
-            {slideId < TOTAL_SLIDES && slideId > 1 && (
-                <button onClick={goNext} className="fixed right-4 top-1/2 -translate-y-1/2 z-40 p-3 cursor-pointer">
-                    <ChevronRight className="text-text" size={36} />
-                </button>
+        <div {...swipeHandlers} onClick={handleTapZone} className="min-h-screen">
+            <ProgressBars total={TOTAL_SLIDES} current={slideId} />
+            <SlideComponent onComplete={markComplete} />
+
+            <AnimatePresence>
+                {showHint && (
+                    <motion.div
+                        key="hint"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 10 }}
+                        transition={{ duration: 0.3 }}
+                        className="fixed bottom-10 left-1/2 -translate-x-1/2 bg-text text-bg px-5 py-2 rounded-full text-sm z-50"
+                    >
+                        {UNCOMPLETED_HINT}
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {isCurrentComplete && slideId < TOTAL_SLIDES && (
+                <motion.div
+                    animate={{ x: [0, 6, 0] }}
+                    transition={{ repeat: Infinity, duration: 1.5 }}
+                    className="fixed right-4 top-1/2 -translate-y-1/2 text-text/40 pointer-events-none"
+                >
+                    →
+                </motion.div>
             )}
         </div>
     );

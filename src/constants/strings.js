@@ -1,4 +1,7 @@
-// 1-й слайд - интро
+// общие
+export const UNCOMPLETED_HINT = `Прежде чем перейти на следующую страницу, закончи эту.`
+
+// интро
 export const REPLY = `Reply // 2026`;
 export const GREETING = `Привет!
 Позволь тебе сразу рассказать, что такое Reply и зачем я его скинул тебе. 😋
@@ -14,3 +17,4 @@ export const TOTAL_SHE = `сообщений написала Ксюша`;
 export const TOTAL_ETC = ({ photos, videos, voices, roundVideo }) =>
     `(из них ${photos} фоток, ${videos} видео, ${voices} голосовых и ${roundVideo} кружка.)`;
 export const TOTAL_MERGE = `Слить воедино!`;
+export const TOTAL_MSGS = (count) => `${count} сообщений всего за 2026-й год!`

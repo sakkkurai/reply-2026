@@ -2,6 +2,7 @@ import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import SlideDeck from './components/SlideDeck'
 import Cursor from './components/ui/Cursor';
 import Preloader from './Preloader';
+import SlideIntro from './components/slides/SlideIntro';
 
 function App() {
   return (
@@ -10,7 +11,7 @@ function App() {
         <Cursor />
         <HashRouter>
           <Routes>
-            <Route path="/" element={<Navigate to="/slide/1" replace />} />
+            <Route path="/" element={<SlideIntro />} />
             <Route path="/slide/:id" element={<SlideDeck />} />
           </Routes>
         </HashRouter>

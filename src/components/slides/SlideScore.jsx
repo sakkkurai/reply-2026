@@ -1,38 +1,48 @@
-import { TOTAL_ETC, TOTAL_ME, TOTAL_MERGE, TOTAL_SHE, TOTAL_TITLE } from "../../constants/strings"
+import { TOTAL_ETC, TOTAL_ME, TOTAL_MERGE, TOTAL_MSGS, TOTAL_SHE, TOTAL_TITLE } from "../../constants/strings"
 import { Button, Text, Title } from "../ui/Typography"
 import metrics from '../../constants/metrics.json';
 import { useState } from "react";
 import { motion, AnimatePresence } from 'framer-motion';
 
 const mapMedia = (m) => ({
-    photos: m.photo,
-    videos: m.video_file,
-    voices: m.voice_message,
-    roundVideo: m.video_message,
+    photos: m.photo.toLocaleString('ru-RU'),
+    videos: m.video_file.toLocaleString('ru-RU'),
+    voices: m.voice_message.toLocaleString('ru-RU'),
+    roundVideo: m.video_message.toLocaleString('ru-RU'),
 });
 
-export default function SlideScore() {
+export default function SlideScore({ onComplete }) {
     const [showTotal, setShowTotal] = useState(false);
     const { messages_me, messages_her, total_messages, media_me, media_her, media_total } = metrics.score;
+    const [phase, setPhase] = useState('idle');
+    const handleMerge = () => setPhase('merging');
+
     return (
         <div className="min-h-screen flex flex-col items-center justify-center pb-8">
             <Title className="text-2xl pb-12">{TOTAL_TITLE}</Title>
 
-            <div className="relative flex gap-32 items-center justify-center min-h-[280px]">
+            <div className="relative flex gap-32 items-center justify-center min-h-[280px] w-full">
                 <AnimatePresence mode="wait">
-                    {!showTotal ? (
+                    {(phase === 'idle' || phase === 'merging') && (
                         <motion.div
                             key="columns"
                             className="flex gap-32 items-center"
                             exit={{ opacity: 0 }}
-                            transition={{ duration: 0.4 }}
+                            transition={{ duration: 0.3 }}
                         >
                             <motion.div
-                                className="flex flex-col items-center"
-                                animate={showTotal ? { x: 120 } : { x: 0 }}
-                                transition={{ duration: 0.6, ease: 'easeInOut' }}
+                                className="flex flex-col items-center relative z-10"
+                                animate={
+                                    phase === 'merging'
+                                        ? { x: 280, scale: 0.4, opacity: 0.6 }
+                                        : { x: 0, scale: 1, opacity: 1 }
+                                }
+                                transition={{ duration: 0.65, ease: 'easeInOut' }}
+                                onAnimationComplete={() => {
+                                    if (phase === 'merging') setPhase('flash');
+                                }}
                             >
-                                <Text className="text-8xl">{messages_me}</Text>
+                                <Text className="text-8xl">{messages_me.toLocaleString('ru-RU')}</Text>
                                 <Text className="text-4xl">{TOTAL_ME}</Text>
                                 <Text className="text-xl">{TOTAL_ETC(mapMedia(media_me))}</Text>
                             </motion.div>
@@ -40,35 +50,59 @@ export default function SlideScore() {
                             <div className="w-px h-32 bg-text/20" />
 
                             <motion.div
-                                className="flex flex-col items-center"
-                                animate={showTotal ? { x: -120 } : { x: 0 }}
-                                transition={{ duration: 0.6, ease: 'easeInOut' }}
+                                className="flex flex-col items-center relative z-0"
+                                animate={
+                                    phase === 'merging'
+                                        ? { x: -280, scale: 0.4, opacity: 0.6 }
+                                        : { x: 0, scale: 1, opacity: 1 }
+                                }
+                                transition={{ duration: 0.65, ease: 'easeInOut' }}
                             >
-                                <Text className="text-8xl">{messages_her}</Text>
+                                <Text className="text-8xl">{messages_her.toLocaleString('ru-RU')}</Text>
                                 <Text className="text-4xl">{TOTAL_SHE}</Text>
                                 <Text className="text-xl">{TOTAL_ETC(mapMedia(media_her))}</Text>
                             </motion.div>
                         </motion.div>
-                    ) : (
+                    )}
+
+                    {phase === 'flash' && (
+                        <motion.div
+                            key="flash"
+                            className="absolute w-24 h-24 bg-text rounded-full"
+                            initial={{ scale: 0, opacity: 0 }}
+                            animate={{ scale: 8, opacity: [0, 0.9, 0] }}
+                            transition={{ duration: 0.55, times: [0, 0.35, 1] }}
+                            onAnimationComplete={() => setPhase('done')}
+                        />
+                    )}
+
+                    {phase === 'done' && (
                         <motion.div
                             key="total"
                             className="text-center"
-                            initial={{ opacity: 0, scale: 0.8 }}
+                            initial={{ opacity: 0, scale: 0.85 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 0.5, delay: 0.3 }}
+                            transition={{ duration: 0.4 }}
+                            onAnimationComplete={() => onComplete?.()}
                         >
-                            <Text className="text-8xl">{total_messages}</Text>
+                            <Text className="text-8xl">{TOTAL_MSGS(total_messages.toLocaleString('ru-RU'))}</Text>
                             <Text className="text-xl mt-2">{TOTAL_ETC(mapMedia(media_total))}</Text>
                         </motion.div>
                     )}
                 </AnimatePresence>
             </div>
 
-            {!showTotal && (
-                <Button className="mt-16" onClick={() => setShowTotal(true)}>
-                    {TOTAL_MERGE}
-                </Button>
-            )}
+            <div className="mt-16 h-14 flex items-center justify-center">
+                <AnimatePresence mode="wait">
+                    {phase === 'idle' && (
+                        <motion.div key="btn" exit={{ opacity: 0 }}>
+                            <Button data-no-tap-nav onClick={handleMerge}>
+                                {TOTAL_MERGE}
+                            </Button>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </div>
         </div>
     );
 }
