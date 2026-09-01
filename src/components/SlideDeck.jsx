@@ -64,6 +64,7 @@ function SlideDeck() {
         onSwipedRight: goPrev,
         preventScrollOnSwipe: true,
         trackMouse: false,
+        delta: 50,
     });
 
     useEffect(() => {
@@ -96,7 +97,7 @@ function SlideDeck() {
     return (
         <div {...swipeHandlers} onClick={handleTapZone} className="min-h-screen">
             <ProgressBars total={TOTAL_SLIDES} current={slideId} />
-            <SlideComponent onComplete={markComplete} />
+            <SlideComponent onComplete={markComplete} alreadyCompleted={isCurrentComplete} />
 
             <AnimatePresence>
                 {showHint && (

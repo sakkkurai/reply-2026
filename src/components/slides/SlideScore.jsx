@@ -11,10 +11,9 @@ const mapMedia = (m) => ({
     roundVideo: m.video_message.toLocaleString('ru-RU'),
 });
 
-export default function SlideScore({ onComplete }) {
-    const [showTotal, setShowTotal] = useState(false);
+export default function SlideScore({ onComplete, alreadyCompleted }) {
     const { messages_me, messages_her, total_messages, media_me, media_her, media_total } = metrics.score;
-    const [phase, setPhase] = useState('idle');
+    const [phase, setPhase] = useState(alreadyCompleted ? 'done' : 'idle');
     const handleMerge = () => setPhase('merging');
 
     return (
@@ -34,7 +33,7 @@ export default function SlideScore({ onComplete }) {
                                 className="flex flex-col items-center relative z-10"
                                 animate={
                                     phase === 'merging'
-                                        ? { x: 280, scale: 0.4, opacity: 0.6 }
+                                        ? { x: 280, scale: 0.4, opacity: 0 }
                                         : { x: 0, scale: 1, opacity: 1 }
                                 }
                                 transition={{ duration: 0.65, ease: 'easeInOut' }}
@@ -53,7 +52,7 @@ export default function SlideScore({ onComplete }) {
                                 className="flex flex-col items-center relative z-0"
                                 animate={
                                     phase === 'merging'
-                                        ? { x: -280, scale: 0.4, opacity: 0.6 }
+                                        ? { x: -280, scale: 0.4, opacity: 0 }
                                         : { x: 0, scale: 1, opacity: 1 }
                                 }
                                 transition={{ duration: 0.65, ease: 'easeInOut' }}
@@ -86,7 +85,7 @@ export default function SlideScore({ onComplete }) {
                             onAnimationComplete={() => onComplete?.()}
                         >
                             <Text className="text-8xl">{TOTAL_MSGS(total_messages.toLocaleString('ru-RU'))}</Text>
-                            <Text className="text-xl mt-2">{TOTAL_ETC(mapMedia(media_total))}</Text>
+                            <Text className="text-xl mt-4">{TOTAL_ETC(mapMedia(media_total))}</Text>
                         </motion.div>
                     )}
                 </AnimatePresence>
