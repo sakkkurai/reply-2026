@@ -23,6 +23,6 @@ export const TOTAL_MSGS = (count) => `${count} сообщений всего з�
 export const HOURPEEK_QUESTION = `Как ты думаешь: мы чаще общаемся до заката или после? ⛅`
 export const HOURPEEK_BUTTON_BEFORE = `Наверное, до...`;
 export const HOURPEEK_BUTTON_AFTER = `Уверена, после!`;
-export const HOURPEEK_RIGHT_TITLE = `Умничка!`;
-export const HOURPEEK_WRONG_TITLE = `А вот и нет :(`;
-export const HOURPEEK_DESCRIPTION = (peak_time) => `Основная часть нашего общения приходилась на ${peak_time}.`;
+export const HOURPEEK_RIGHT_TITLE = `Умничка!🎊`;
+export const HOURPEEK_WRONG_TITLE = `А вот и нет ☹️`;
+export const HOURPEEK_DESCRIPTION = (peak_time) => `Основная часть нашего общения приходилась на ~${peak_time}:00.`;

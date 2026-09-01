@@ -1,5 +1,5 @@
 import { TOTAL_ETC, TOTAL_ME, TOTAL_MERGE, TOTAL_MSGS, TOTAL_SHE, TOTAL_TITLE } from "../../constants/strings"
-import { Button, Text, Title } from "../ui/Typography"
+import { Button, Text, Title, BUTTON_ACCENT } from "../ui/Typography"
 import metrics from '../../constants/metrics.json';
 import { useState } from "react";
 import { motion, AnimatePresence } from 'framer-motion';
