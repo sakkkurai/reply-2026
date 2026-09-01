@@ -95,7 +95,7 @@ export default function SlideScore({ onComplete, alreadyCompleted }) {
                 <AnimatePresence mode="wait">
                     {phase === 'idle' && (
                         <motion.div key="btn" exit={{ opacity: 0 }}>
-                            <Button data-no-tap-nav onClick={handleMerge}>
+                            <Button data-no-tap-nav onClick={handleMerge} state={BUTTON_ACCENT}>
                                 {TOTAL_MERGE}
                             </Button>
                         </motion.div>

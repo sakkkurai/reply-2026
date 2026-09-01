@@ -16,10 +16,14 @@ export function Text({ children, className = '' }) {
 
 export const BUTTON_ACCENT = 1;
 export const BUTTON_SECONDARY = 2;
+const STATE_STYLES = {
+    [BUTTON_ACCENT]: 'bg-text text-bg',
+    [BUTTON_SECONDARY]: 'bg-bg-alt text-text border-2 border-text',
+};
 
 export function Button({ children, className = '', onClick, state }) {
     return (
-        <button onClick={onClick} className={`bg-text text-bg font-script-caveat flex justify-center text-4xl bg-bg-alt px-12 py-4 rounded-full cursor-pointer transition-transform duration-200 hover:scale-105 ${className}`}>
+        <button onClick={onClick} className={`font-script-caveat flex justify-center text-4xl bg-bg-alt px-12 py-4 rounded-full cursor-pointer transition-transform duration-200 hover:scale-105 ${STATE_STYLES[state]} ${className}`}>
             {children}
         </button>
     );
