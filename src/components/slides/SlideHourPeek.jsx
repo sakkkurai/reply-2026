@@ -1,4 +1,4 @@
-import { HOURPEEK_BUTTON_AFTER, HOURPEEK_BUTTON_BEFORE, HOURPEEK_DESCRIPTION, HOURPEEK_QUESTION, HOURPEEK_RIGHT_TITLE, HOURPEEK_WRONG_TITLE } from "../../constants/strings";
+import { HOURPEEK_BUTTON_AFTER, HOURPEEK_BUTTON_BEFORE, HOURPEEK_BUTTON_NEXT, HOURPEEK_DESCRIPTION, HOURPEEK_QUESTION, HOURPEEK_RIGHT_TITLE, HOURPEEK_WRONG_TITLE } from "../../constants/strings";
 import { Button, BUTTON_ACCENT, Text, Title, BUTTON_SECONDARY } from "../ui/Typography";
 import { useState } from "react";
 import { motion, AnimatePresence } from 'framer-motion';
@@ -7,9 +7,9 @@ import metrics from "../../constants/metrics.json"
 
 const SUNSET_HOUR = 18;
 
-export default function SlideHourPeek({ onComplete, alreadyCompleted }) {
-    const [answered, setAnswered] = useState(alreadyCompleted ?? false);
-    const [choice, setChoice] = useState(null);
+export default function SlideHourPeek({ onComplete, completedData, goNext }) {
+    const [answered, setAnswered] = useState(Boolean(completedData));
+    const [choice, setChoice] = useState(completedData?.choice ?? null);
     const { peak_hour, hour_histogram } = metrics.peak_hour;
 
     const beforeSunset = hour_histogram.slice(0, SUNSET_HOUR).reduce((a, b) => a + b, 0);
@@ -19,7 +19,7 @@ export default function SlideHourPeek({ onComplete, alreadyCompleted }) {
     const handleAnswer = (value) => {
         setChoice(value);
         setAnswered(true);
-        onComplete?.();
+        onComplete?.({ choice: value });
     };
 
     const chartData = hour_histogram.map((count, hour) => ({
@@ -65,45 +65,49 @@ export default function SlideHourPeek({ onComplete, alreadyCompleted }) {
                         </Title>
 
                         <motion.div
-                            className="w-full h-64 mt-10"
+                            className="w-full mt-10 flex flex-col items-center"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, delay: 0.4 }}
                         >
-                            <ResponsiveContainer width="100%" height="100%">
-                                <LineChart data={chartData}>
-                                    <XAxis
-                                        dataKey="hour"
-                                        interval={0}
-                                        tick={{ fontSize: 11, fill: 'var(--color-text)' }}
-                                        axisLine={{ stroke: 'var(--color-text)', strokeOpacity: 0.3 }}
-                                        tickLine={false}
-                                    />
-                                    <YAxis
-                                        hide={false}
-                                        tick={{ fontSize: 11, fill: 'var(--color-text)' }}
-                                        axisLine={{ stroke: 'var(--color-text)', strokeOpacity: 0.3 }}
-                                        tickLine={false}
-                                    />
-                                    <Line
-                                        type="monotone"
-                                        dataKey="count"
-                                        stroke="var(--color-bg-alt)"
-                                        strokeWidth={3}
-                                        dot={<PeakDot />}
-                                        animationDuration={1200}
-                                    />
-                                </LineChart>
-                            </ResponsiveContainer>
+
+                            <div className="w-full h-64">
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <LineChart data={chartData}>
+                                        <XAxis
+                                            dataKey="hour"
+                                            interval={0}
+                                            tick={{ fontSize: 11, fill: 'var(--color-text)' }}
+                                            axisLine={{ stroke: 'var(--color-text)', strokeOpacity: 0.3 }}
+                                            tickLine={false}
+                                        />
+                                        <YAxis
+                                            hide={false}
+                                            tick={{ fontSize: 11, fill: 'var(--color-text)' }}
+                                            axisLine={{ stroke: 'var(--color-text)', strokeOpacity: 0.3 }}
+                                            tickLine={false}
+                                        />
+                                        <Line
+                                            type="monotone"
+                                            dataKey="count"
+                                            stroke="var(--color-bg-alt)"
+                                            strokeWidth={3}
+                                            dot={<PeakDot />}
+                                            animationDuration={1200}
+                                        />
+                                    </LineChart>
+                                </ResponsiveContainer>
+                            </div>
                             <Text className="text-xl mt-2">
                                 {HOURPEEK_DESCRIPTION(peak_hour)}
                             </Text>
+                            <Button className="mt-8" onClick={goNext} state={BUTTON_ACCENT}>{HOURPEEK_BUTTON_NEXT}</Button>
                         </motion.div>
                     </motion.div>
                 )}
 
             </AnimatePresence>
-        </div>
+        </div >
     );
 }
 

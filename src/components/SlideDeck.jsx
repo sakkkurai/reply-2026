@@ -6,10 +6,12 @@ import SlideHourPeek from './slides/SlideHourPeek';
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { UNCOMPLETED_HINT } from '../constants/strings';
+import SlideStreak from './slides/SlideStreak';
 
 const SLIDE_COMPONENTS = {
     1: SlideScore,
     2: SlideHourPeek,
+    3: SlideStreak,
 };
 
 function ProgressBars({ total, current }) {
@@ -90,14 +92,14 @@ function SlideDeck() {
         return <p>Слайд не найден!</p>;
     }
 
-    const markComplete = () => {
-        setCompleted((prev) => ({ ...prev, [slideId]: true }));
+    const markComplete = (data) => {
+        setCompleted((prev) => ({ ...prev, [slideId]: data ?? true }));
     };
 
     return (
         <div {...swipeHandlers} onClick={handleTapZone} className="min-h-screen">
             <ProgressBars total={TOTAL_SLIDES} current={slideId} />
-            <SlideComponent onComplete={markComplete} alreadyCompleted={isCurrentComplete} />
+            <SlideComponent onComplete={markComplete} completedData={completed[slideId]} goNext={goNext} />
 
             <AnimatePresence>
                 {showHint && (

@@ -1,5 +1,5 @@
 // общие
-export const UNCOMPLETED_HINT = `Прежде чем перейти на следующую страницу, закончи эту.`
+export const UNCOMPLETED_HINT = `Прежде чем перейти на следующую страницу, закончи эту.`;
 
 // интро
 export const REPLY = `Reply // 2026`;
@@ -17,7 +17,8 @@ export const TOTAL_SHE = `сообщений написала Ксюша`;
 export const TOTAL_ETC = ({ photos, videos, voices, roundVideo }) =>
     `(из них ${photos} фоток, ${videos} видео, ${voices} голосовых и ${roundVideo} кружка.)`;
 export const TOTAL_MERGE = `Слить воедино!`;
-export const TOTAL_MSGS = (count) => `${count} сообщений всего за 2026-й год!`
+export const TOTAL_MSGS = (count) => `${count} сообщений всего за 2026-й год!`;
+export const TOTAL_BUTTON_NEXT = `Вперёд!`;
 
 // 2-й слайд - пиковые часы общения
 export const HOURPEEK_QUESTION = `Как ты думаешь: мы чаще общаемся до заката или после? ⛅`
@@ -26,3 +27,10 @@ export const HOURPEEK_BUTTON_AFTER = `Уверена, после!`;
 export const HOURPEEK_RIGHT_TITLE = `Умничка!🎊`;
 export const HOURPEEK_WRONG_TITLE = `А вот и нет ☹️`;
 export const HOURPEEK_DESCRIPTION = (peak_time) => `Основная часть нашего общения приходилась на ~${peak_time}:00.`;
+export const HOURPEEK_BUTTON_NEXT = `Давай дальше!`;
+
+// 3-й слайд - серия общения
+export const STREAK_TITLE = `Серия общения`;
+export const STREAK_CAPTION = (time) => `Самое большое время, что мы не общались: ${time} часов.`;
+export const STREAK_BUTTON_NEXT = `К следующему слайду`;
+export const STREAK_DAYS_LONGEST = `дней подряд`;

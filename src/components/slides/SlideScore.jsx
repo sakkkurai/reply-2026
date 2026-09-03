@@ -1,4 +1,4 @@
-import { TOTAL_ETC, TOTAL_ME, TOTAL_MERGE, TOTAL_MSGS, TOTAL_SHE, TOTAL_TITLE } from "../../constants/strings"
+import { TOTAL_BUTTON_NEXT, TOTAL_ETC, TOTAL_ME, TOTAL_MERGE, TOTAL_MSGS, TOTAL_SHE, TOTAL_TITLE } from "../../constants/strings"
 import { Button, Text, Title, BUTTON_ACCENT } from "../ui/Typography"
 import metrics from '../../constants/metrics.json';
 import { useState } from "react";
@@ -11,14 +11,16 @@ const mapMedia = (m) => ({
     roundVideo: m.video_message.toLocaleString('ru-RU'),
 });
 
-export default function SlideScore({ onComplete, alreadyCompleted }) {
+export default function SlideScore({ onComplete, completedData, goNext }) {
     const { messages_me, messages_her, total_messages, media_me, media_her, media_total } = metrics.score;
-    const [phase, setPhase] = useState(alreadyCompleted ? 'done' : 'idle');
+    const [phase, setPhase] = useState(completedData ? 'done' : 'idle');
     const handleMerge = () => setPhase('merging');
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center pb-8">
-            <Title className="text-2xl pb-12">{TOTAL_TITLE}</Title>
+        <motion.div layout className="min-h-screen flex flex-col items-center justify-center">
+            <motion.div layout>
+                <Title className="text-2xl pb-12">{TOTAL_TITLE}</Title>
+            </motion.div>
 
             <div className="relative flex gap-32 items-center justify-center min-h-[280px] w-full">
                 <AnimatePresence mode="wait">
@@ -78,7 +80,7 @@ export default function SlideScore({ onComplete, alreadyCompleted }) {
                     {phase === 'done' && (
                         <motion.div
                             key="total"
-                            className="text-center"
+                            className="flex flex-col items-center text-center"
                             initial={{ opacity: 0, scale: 0.85 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 0.4 }}
@@ -86,22 +88,20 @@ export default function SlideScore({ onComplete, alreadyCompleted }) {
                         >
                             <Text className="text-8xl">{TOTAL_MSGS(total_messages.toLocaleString('ru-RU'))}</Text>
                             <Text className="text-xl mt-4">{TOTAL_ETC(mapMedia(media_total))}</Text>
+                            <Button className="mt-16" state={BUTTON_ACCENT} onClick={goNext}>{TOTAL_BUTTON_NEXT}</Button>
+
                         </motion.div>
                     )}
                 </AnimatePresence>
             </div>
 
-            <div className="mt-16 h-14 flex items-center justify-center">
-                <AnimatePresence mode="wait">
-                    {phase === 'idle' && (
-                        <motion.div key="btn" exit={{ opacity: 0 }}>
-                            <Button data-no-tap-nav onClick={handleMerge} state={BUTTON_ACCENT}>
-                                {TOTAL_MERGE}
-                            </Button>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
-            </div>
-        </div>
+            {phase === 'idle' && (
+                <div className="mt-16 h-14 flex items-center justify-center">
+                    <Button data-no-tap-nav onClick={handleMerge} state={BUTTON_ACCENT}>
+                        {TOTAL_MERGE}
+                    </Button>
+                </div>
+            )}
+        </motion.div>
     );
 }
