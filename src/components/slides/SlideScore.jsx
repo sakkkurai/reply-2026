@@ -27,9 +27,11 @@ export default function SlideScore({ onComplete, completedData, goNext }) {
                     {(phase === 'idle' || phase === 'merging') && (
                         <motion.div
                             key="columns"
-                            className="flex gap-32 items-center"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0 }}
-                            transition={{ duration: 0.3 }}
+                            transition={{ duration: 0.5 }}
+                            className="flex gap-32 items-center"
                         >
                             <motion.div
                                 className="flex flex-col items-center relative z-10"

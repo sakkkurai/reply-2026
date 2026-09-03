@@ -32,6 +32,21 @@ function ProgressBars({ total, current }) {
     );
 }
 
+const slideVariants = {
+    enter: (direction) => ({
+        x: direction > 0 ? 80 : -80,
+        opacity: 0,
+    }),
+    center: {
+        x: 0,
+        opacity: 1,
+    },
+    exit: (direction) => ({
+        x: direction > 0 ? -80 : 80,
+        opacity: 0,
+    }),
+};
+
 function SlideDeck() {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -43,6 +58,7 @@ function SlideDeck() {
     const [showHint, setShowHint] = useState(false);
     const isCurrentComplete = completed[slideId] ?? false;
     const hintTimeoutRef = useRef(null);
+    const directionRef = useRef(1);
 
     const triggerHint = () => {
         setShowHint(true);
@@ -55,10 +71,16 @@ function SlideDeck() {
             triggerHint();
             return;
         }
-        if (slideId < TOTAL_SLIDES) navigate(`/slide/${slideId + 1}`);
+        if (slideId < TOTAL_SLIDES) {
+            directionRef.current = 1;
+            navigate(`/slide/${slideId + 1}`);
+        }
     };
     const goPrev = () => {
-        if (slideId > 1) navigate(`/slide/${slideId - 1}`);
+        if (slideId > 1) {
+            directionRef.current = -1;
+            navigate(`/slide/${slideId - 1}`);
+        }
     };
 
     const swipeHandlers = useSwipeable({
@@ -99,7 +121,23 @@ function SlideDeck() {
     return (
         <div {...swipeHandlers} onClick={handleTapZone} className="min-h-screen">
             <ProgressBars total={TOTAL_SLIDES} current={slideId} />
-            <SlideComponent onComplete={markComplete} completedData={completed[slideId]} goNext={goNext} />
+            <AnimatePresence mode="wait" custom={directionRef.current}>
+                <motion.div
+                    key={slideId}
+                    custom={directionRef.current}
+                    variants={slideVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    transition={{ duration: 0.35, ease: 'easeInOut' }}
+                >
+                    <SlideComponent
+                        onComplete={markComplete}
+                        completedData={completed[slideId]}
+                        goNext={goNext}
+                    />
+                </motion.div>
+            </AnimatePresence>
 
             <AnimatePresence>
                 {showHint && (

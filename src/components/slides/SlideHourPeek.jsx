@@ -34,7 +34,14 @@ export default function SlideHourPeek({ onComplete, completedData, goNext }) {
 
             <AnimatePresence mode="wait">
                 {!answered ? (
-                    <motion.div key="quiz" exit={{ opacity: 0 }} className="pt-16 flex">
+                    <motion.div
+                        key="quiz"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.5 }}
+                        className="pt-16 flex">
+
                         <Button
                             data-no-tap-nav
                             state={BUTTON_ACCENT}

@@ -16,3 +16,16 @@
 ::selection {
     background: color-mix(in srgb, var(--color-text) 25%, transparent);
 }
+
+html,
+body {
+    overflow: hidden;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#root {
+    height: 100%;
+    overflow: hidden;
+}
