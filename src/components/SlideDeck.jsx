@@ -7,11 +7,13 @@ import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { UNCOMPLETED_HINT } from '../constants/strings';
 import SlideStreak from './slides/SlideStreak';
+import SlideTopWords from './slides/SlideTopWords';
 
 const SLIDE_COMPONENTS = {
     1: SlideScore,
     2: SlideHourPeek,
     3: SlideStreak,
+    4: SlideTopWords,
 };
 
 function ProgressBars({ total, current }) {

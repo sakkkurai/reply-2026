@@ -6,7 +6,7 @@ import metrics from '../../constants/metrics.json';
 import { STREAK_BUTTON_NEXT, STREAK_CAPTION, STREAK_DAYS_LONGEST, STREAK_TITLE } from '../../constants/strings';
 
 export default function SlideStreak({ onComplete, goNext, completedData }) {
-    const { longest_streak_days, longest_pause_hours } = metrics.streak;
+    const { longest_streak_days, longest_pause_hours, longest_pause_broken_by, longest_pause_start, longest_pause_end } = metrics.streak;
     const [count, setCount] = useState(completedData ? longest_streak_days : 0);
     const [done, setDone] = useState(Boolean(completedData));
 
@@ -37,6 +37,20 @@ export default function SlideStreak({ onComplete, goNext, completedData }) {
     }, []);
 
     const brightness = count / longest_streak_days;
+
+    const MONTHS_GENITIVE = [
+        'января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
+        'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря',
+    ];
+
+    const formatDateTime = (isoString) => {
+        const date = new Date(isoString);
+        const day = date.getDate();
+        const month = MONTHS_GENITIVE[date.getMonth()];
+        const hours = date.getHours();
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        return `${day}-го ${month}, ${hours}:${minutes}`;
+    };
 
     return (
         <motion.div layout className="min-h-screen flex flex-col items-center justify-center px-6 text-center">
@@ -89,7 +103,7 @@ export default function SlideStreak({ onComplete, goNext, completedData }) {
                     </Button>
 
                     <Text className="text-xl">
-                        {STREAK_CAPTION(longest_pause_hours)}
+                        {STREAK_CAPTION(longest_pause_hours, formatDateTime(longest_pause_start), formatDateTime(longest_pause_end), longest_pause_broken_by)}
                     </Text>
                 </motion.div>
             )}

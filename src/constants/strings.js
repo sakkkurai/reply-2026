@@ -31,6 +31,13 @@ export const HOURPEEK_BUTTON_NEXT = `Давай дальше!`;
 
 // 3-й слайд - серия общения
 export const STREAK_TITLE = `Серия общения`;
-export const STREAK_CAPTION = (time) => `Самое большое время, что мы не общались: ${time} часов.`;
+export const STREAK_CAPTION = (time, pause_start, pause_end, who_breaked_pause) => `Самое большое время, что мы не общались: ${time} часов.
+Это было с ${pause_start} до ${pause_end}. Эта пауза была прервана ${who_breaked_pause === 'me' ? 'мной' : 'тобой'}.`;
 export const STREAK_BUTTON_NEXT = `К следующему слайду`;
 export const STREAK_DAYS_LONGEST = `дней подряд`;
+
+// 4-й слайд - топ слов
+export const TOPWORDS_TITLE = `Топ слов`;
+export const TOPWORDS_DESCRIPTION = `Так, позволь мне сразу объяснить, что тут стоит делать.
+Перед тобой появятся две колонки и слова, которые мы использовали в общении чаще всего. Твоя задача - угадать чьё это слово и передвинуть в соответствующую колонку. 👅`;
+export const TOPWORDS_BUTTON_INTRO_NEXT = `Приступим?`;
