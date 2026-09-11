@@ -8,7 +8,7 @@ export const GREETING = `Привет!
 Reply — это наши итоги года (а-ля Spotify Wrapped, YouTube Recap, и всё в этом духе). Ты узнаешь о некоторых интересных вещах из наших отношений. Надеюсь, ты поняла.
 Ну что, интересно? 😎`;
 export const LETS_GO = `Вперёд!`;
-export const COVERAGE_DATES = (from, to) => `Данные в этом проекте учитываются, начиная с ${from} до ${to}.`
+export const COVERAGE_DATES = (from, to) => `Данные в этом Reply учитываются, начиная с ${from} до ${to}.`
 
 // 1-й слайд - всего сообщений
 export const TOTAL_TITLE = `Так, а сколько мы вообще общались?`;
@@ -52,8 +52,12 @@ export const TOPWORDS_NEXT = `Дальше? Сюда.`
 
 // 5-й слайд - кто скучает больше?
 export const WHOMISSMORE_TITLE = `Кто скучает больше?`;
-export const WHOMISSMORE_INITIALIZATIONS = `Кто чаще инициализирует диалоги?`;
-export const WHOMISSMORE_TIME_RESPONSE = `Кто быстрее отвечает?`;
+export const MISS_BUTTON_START = "Узнать";
+export const WHOMISSMORE_RESULT = (who, ending) => `${who} чаще не выдерживает и пишет ${ending}`;
+export const WHOMISSMORE_CAPTION = (meTime, herTime) =>
+    `В среднем Миша отвечает за ${meTime}, а Ксюша — за ${herTime}.`;
+export const WHOMISSMORE_NEXT = "Некст";
+export const WHOMISSMORE_BUTTON_START = `Узнать!`
 
 // 6-й слайд - пульс отношений
 export const PULSE_TITLE = `Пульс Отношений`;

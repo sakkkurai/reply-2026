@@ -43,7 +43,6 @@ export default function SlideIntro() {
                         <Text className="text-center">{l}</Text>
                     </motion.div>
                 ))}
-                <Text className="text-xl mt-8">{COVERAGE_DATES(date_from.replace(/^(\d{4})-(\d{2})-(\d{2})$/, "$3.$2.$1"), date_to.replace(/^(\d{4})-(\d{2})-(\d{2})$/, "$3.$2.$1"))}</Text>
 
             </motion.div>
 
@@ -63,6 +62,14 @@ export default function SlideIntro() {
                     <ArrowRight size={20} />
                 </Button>
 
+            </motion.div>
+
+            <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: lines.length * 0.5 + 0.6 }}>
+
+                <Text className="text-xl mt-4">{COVERAGE_DATES(date_from.replace(/^(\d{4})-(\d{2})-(\d{2})$/, "$3.$2.$1"), date_to.replace(/^(\d{4})-(\d{2})-(\d{2})$/, "$3.$2.$1"))}</Text>
             </motion.div>
         </div>
     );
