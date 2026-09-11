@@ -8,12 +8,20 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { UNCOMPLETED_HINT } from '../constants/strings';
 import SlideStreak from './slides/SlideStreak';
 import SlideTopWords from './slides/SlideTopWords';
+import SlideWhoMissMore from './slides/SlideWhoMissMore';
+import SlidePulse from './slides/SlidePulse';
+import SlideOverview from './slides/SlideOverview';
+import SlidePersonal from './slides/SlidePersonal';
 
 const SLIDE_COMPONENTS = {
     1: SlideScore,
     2: SlideHourPeek,
     3: SlideStreak,
     4: SlideTopWords,
+    5: SlideWhoMissMore,
+    6: SlidePulse,
+    7: SlideOverview,
+    8: SlidePersonal,
 };
 
 function ProgressBars({ total, current }) {

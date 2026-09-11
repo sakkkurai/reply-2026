@@ -8,6 +8,7 @@ export const GREETING = `Привет!
 Reply — это наши итоги года (а-ля Spotify Wrapped, YouTube Recap, и всё в этом духе). Ты узнаешь о некоторых интересных вещах из наших отношений. Надеюсь, ты поняла.
 Ну что, интересно? 😎`;
 export const LETS_GO = `Вперёд!`;
+export const COVERAGE_DATES = (from, to) => `Данные в этом проекте учитываются, начиная с ${from} до ${to}.`
 
 // 1-й слайд - всего сообщений
 export const TOTAL_TITLE = `Так, а сколько мы вообще общались?`;
@@ -41,3 +42,24 @@ export const TOPWORDS_TITLE = `Топ слов`;
 export const TOPWORDS_DESCRIPTION = `Так, позволь мне сразу объяснить, что тут стоит делать.
 Перед тобой появятся две колонки и слова, которые мы использовали в общении чаще всего. Твоя задача - угадать чьё это слово и передвинуть в соответствующую колонку. 👅`;
 export const TOPWORDS_BUTTON_INTRO_NEXT = `Приступим?`;
+export const TOPWORDS_ME_LABEL = `Миша`;
+export const TOPWORDS_HER_LABEL = `Ксюша`;
+export const TOPWORDS_CORRECT = `Умничка!`;
+export const TOPWORDS_WRONG = `Неправильно :(`;
+export const TOPWORDS_FINAL_RESULT = (score, length) => `${score}/${length} слов угадано правильно!`
+export const TOPWORDS_FINAL = `О, а это ты, кстати! ❤️`;
+export const TOPWORDS_NEXT = `Дальше? Сюда.`
+
+// 5-й слайд - кто скучает больше?
+export const WHOMISSMORE_TITLE = `Кто скучает больше?`;
+export const WHOMISSMORE_INITIALIZATIONS = `Кто чаще инициализирует диалоги?`;
+export const WHOMISSMORE_TIME_RESPONSE = `Кто быстрее отвечает?`;
+
+// 6-й слайд - пульс отношений
+export const PULSE_TITLE = `Пульс Отношений`;
+
+// 7-й слайд - ии овервью
+export const OVERVIEW_TITLE = `ИИ-Обзор`
+
+// 8-й слайд - личное
+export const PERSONAL_TITLE = `И напоследок...`

@@ -1,5 +1,6 @@
-import { GREETING, REPLY, LETS_GO } from "../../constants/strings";
+import { GREETING, REPLY, LETS_GO, COVERAGE_DATES } from "../../constants/strings";
 import { Button, BUTTON_ACCENT, Text, Title } from "../ui/Typography";
+import metrics from '../../constants/metrics.json';
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -19,6 +20,7 @@ const line = {
 export default function SlideIntro() {
     const navigate = useNavigate();
     const lines = GREETING.split('\n');
+    const { date_from, date_to } = metrics.score;
 
     return (
         <div className="min-h-screen flex flex-col items-center justify-center">
@@ -41,6 +43,8 @@ export default function SlideIntro() {
                         <Text className="text-center">{l}</Text>
                     </motion.div>
                 ))}
+                <Text className="text-xl mt-8">{COVERAGE_DATES(date_from.replace(/^(\d{4})-(\d{2})-(\d{2})$/, "$3.$2.$1"), date_to.replace(/^(\d{4})-(\d{2})-(\d{2})$/, "$3.$2.$1"))}</Text>
+
             </motion.div>
 
             <motion.div
@@ -48,14 +52,17 @@ export default function SlideIntro() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: lines.length * 0.5 + 0.6 }}
             >
+
+
                 <Button
-                    className="flex items-center justify-center gap-2 mt-8"
+                    className="flex items-center justify-center gap-2 mt-4"
                     state={BUTTON_ACCENT}
                     onClick={() => navigate('/slide/1')}
                 >
                     {LETS_GO}
                     <ArrowRight size={20} />
                 </Button>
+
             </motion.div>
         </div>
     );

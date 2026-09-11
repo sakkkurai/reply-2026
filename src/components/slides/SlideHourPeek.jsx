@@ -29,12 +29,12 @@ export default function SlideHourPeek({ onComplete, completedData, goNext }) {
     }));
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center px-6">
+        <motion.div className="min-h-screen flex flex-col items-center justify-center px-6" layout>
             {!answered && <Title className="text-center">{HOURPEEK_QUESTION}</Title>}
 
             <AnimatePresence mode="wait">
                 {!answered ? (
-                    <motion.div
+                    <motion.div layout
                         key="quiz"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -60,7 +60,7 @@ export default function SlideHourPeek({ onComplete, completedData, goNext }) {
                         </Button>
                     </motion.div>
                 ) : (
-                    <motion.div
+                    <motion.div layout
                         key="result"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -71,14 +71,14 @@ export default function SlideHourPeek({ onComplete, completedData, goNext }) {
                             {choice === correctAnswer ? HOURPEEK_RIGHT_TITLE : HOURPEEK_WRONG_TITLE}
                         </Title>
 
-                        <motion.div
+                        <motion.div layout
                             className="w-full mt-10 flex flex-col items-center"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, delay: 0.4 }}
                         >
 
-                            <div className="w-full h-64">
+                            <motion.div layout className="w-full h-64">
                                 <ResponsiveContainer width="100%" height="100%">
                                     <LineChart data={chartData}>
                                         <XAxis
@@ -104,7 +104,7 @@ export default function SlideHourPeek({ onComplete, completedData, goNext }) {
                                         />
                                     </LineChart>
                                 </ResponsiveContainer>
-                            </div>
+                            </motion.div>
                             <Text className="text-xl mt-2">
                                 {HOURPEEK_DESCRIPTION(peak_hour)}
                             </Text>
@@ -114,7 +114,7 @@ export default function SlideHourPeek({ onComplete, completedData, goNext }) {
                 )}
 
             </AnimatePresence>
-        </div >
+        </motion.div >
     );
 }
 
