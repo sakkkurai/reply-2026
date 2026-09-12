@@ -12,6 +12,7 @@ import SlideWhoMissMore from './slides/SlideWhoMissMore';
 import SlidePulse from './slides/SlidePulse';
 import SlideOverview from './slides/SlideOverview';
 import SlidePersonal from './slides/SlidePersonal';
+import { Text } from './ui/Typography';
 
 const SLIDE_COMPONENTS = {
     1: SlideScore,
@@ -159,7 +160,7 @@ function SlideDeck() {
                         transition={{ duration: 0.3 }}
                         className="fixed bottom-10 left-1/2 -translate-x-1/2 bg-text text-bg px-5 py-2 rounded-full text-sm z-50"
                     >
-                        {UNCOMPLETED_HINT}
+                        <Text className='text-xl'>{UNCOMPLETED_HINT}</Text>
                     </motion.div>
                 )}
             </AnimatePresence>
