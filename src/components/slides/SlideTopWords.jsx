@@ -131,7 +131,7 @@ export default function SlideTopWords({ onComplete, completedData, goNext }) {
                             exit={{ opacity: 0 }}
                             className="fixed bottom-16 text-xl"
                         >
-                            {feedback === 'correct' ? TOPWORDS_CORRECT : TOPWORDS_WRONG}
+                            <Text>{feedback === 'correct' ? TOPWORDS_CORRECT : TOPWORDS_WRONG}</Text>
                         </motion.div>
                     )}
                     {import.meta.env.DEV && (

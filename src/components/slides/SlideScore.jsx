@@ -1,4 +1,4 @@
-import { TOTAL_BUTTON_NEXT, TOTAL_ETC, TOTAL_ME, TOTAL_MERGE, TOTAL_MSGS, TOTAL_SHE, TOTAL_TITLE } from "../../constants/strings"
+import { TOTAL_BUTTON_NEXT, TOTAL_DESCIRPTION, TOTAL_ETC, TOTAL_ME, TOTAL_MERGE, TOTAL_MSGS, TOTAL_SHE, TOTAL_TITLE } from "../../constants/strings"
 import { Button, Text, Title, BUTTON_ACCENT } from "../ui/Typography"
 import metrics from '../../constants/metrics.json';
 import { useState } from "react";
@@ -89,8 +89,9 @@ export default function SlideScore({ onComplete, completedData, goNext }) {
                             onAnimationComplete={() => onComplete?.()}
                         >
                             <Text className="text-8xl">{TOTAL_MSGS(total_messages.toLocaleString('ru-RU'))}</Text>
-                            <Text className="text-xl mt-4">{TOTAL_ETC(mapMedia(media_total))}</Text>
-                            <Button className="mt-16" state={BUTTON_ACCENT} onClick={goNext}>{TOTAL_BUTTON_NEXT}</Button>
+                            <Text className="text-4xl mt-2">{TOTAL_ETC(mapMedia(media_total))}</Text>
+                            <Text className="mt-2 text-xl">{TOTAL_DESCIRPTION}</Text>
+                            <Button className="mt-8" state={BUTTON_ACCENT} onClick={goNext}>{TOTAL_BUTTON_NEXT}</Button>
 
                         </motion.div>
                     )}

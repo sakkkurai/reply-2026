@@ -19,6 +19,7 @@ export const TOTAL_ETC = ({ photos, videos, voices, roundVideo }) =>
     `(из них ${photos} фоток, ${videos} видео, ${voices} голосовых и ${roundVideo} кружка.)`;
 export const TOTAL_MERGE = `Слить воедино!`;
 export const TOTAL_MSGS = (count) => `${count} сообщений всего за 2026-й год!`;
+export const TOTAL_DESCIRPTION = `Неплохая цифра. Было бы круто, если бы такую тебе скинули на карту, правда?`;
 export const TOTAL_BUTTON_NEXT = `Вперёд!`;
 
 // 2-й слайд - пиковые часы общения
@@ -53,17 +54,20 @@ export const TOPWORDS_NEXT = `Дальше? Сюда.`
 // 5-й слайд - кто скучает больше?
 export const WHOMISSMORE_TITLE = `Кто скучает больше?`;
 export const MISS_BUTTON_START = "Узнать";
-export const WHOMISSMORE_RESULT = (who, ending) => `${who} чаще не выдерживает и пишет ${ending}`;
+export const WHOMISSMORE_RESULT = (who, ending) => `${who} чаще пишет ${ending}!`;
 export const WHOMISSMORE_CAPTION = (meTime, herTime) =>
-    `В среднем Миша отвечает за ${meTime}, а Ксюша — за ${herTime}.`;
+    `К слову, в среднем Миша отвечает за ${meTime}, а Ксюша — за ${herTime}.`;
 export const WHOMISSMORE_NEXT = "Некст";
 export const WHOMISSMORE_BUTTON_START = `Узнать!`
 
 // 6-й слайд - пульс отношений
 export const PULSE_TITLE = `Пульс Отношений`;
+export const PULSE_DESCRIPTION = `Здесь ты можешь навести на квадратик и увидеть, сколько мы общались в тот или иной день!`;
+export const PULSE_DAY = (day, messages) => `${day} мы отправили друг другу ${messages} сообщений!`
+export const PULSE_NEXT = `Что же дальше?`;
 
 // 7-й слайд - ии овервью
-export const OVERVIEW_TITLE = `ИИ-Обзор`
+export const OVERVIEW_TITLE = `ИИ-Обзор`;
 
 // 8-й слайд - личное
-export const PERSONAL_TITLE = `И напоследок...`
+export const PERSONAL_TITLE = `И напоследок...`;
