@@ -65,6 +65,8 @@ export const PULSE_TITLE = `Пульс Отношений`;
 export const PULSE_DESCRIPTION = `Здесь ты можешь навести на квадратик и увидеть, сколько мы общались в тот или иной день!`;
 export const PULSE_DAY = (day, messages) => `${day} мы отправили друг другу ${messages} сообщений!`
 export const PULSE_NEXT = `Что же дальше?`;
+export const PULSE_LESS = `Меньше`;
+export const PULSE_GREATER = `Больше`;
 
 // 7-й слайд - ии овервью
 export const OVERVIEW_TITLE = `ИИ-Обзор`;

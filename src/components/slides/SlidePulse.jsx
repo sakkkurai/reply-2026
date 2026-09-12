@@ -1,6 +1,6 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { PULSE_DESCRIPTION, PULSE_TITLE, PULSE_DAY, PULSE_NEXT } from '../../constants/strings';
+import { PULSE_DESCRIPTION, PULSE_TITLE, PULSE_DAY, PULSE_NEXT, PULSE_LESS, PULSE_GREATER } from '../../constants/strings';
 import { Button, BUTTON_ACCENT, Text, Title } from '../ui/Typography';
 import metrics from '../../constants/metrics.json';
 
@@ -86,22 +86,23 @@ export default function SlidePulse({ onComplete, completedData, goNext }) {
             pageX: e.clientX,
             pageY: e.clientY,
         });
-
-        if (!done) {
-            setDone(true);
-            onComplete?.(true);
-        }
     };
 
     const hideTooltip = () => setTooltip(null);
 
     const gridWidth = weeks.length * COL - GAP;
 
+    useEffect(() => {
+        if (!done) {
+            setDone(true);
+            onComplete?.(true);
+        }
+    });
+
     return (
         <div className="min-h-screen flex flex-col items-center justify-center px-6 gap-6">
             <div className="text-center">
                 <Title>{PULSE_TITLE}</Title>
-                <Text className="text-xl mt-2">{PULSE_DESCRIPTION}</Text>
             </div>
 
             <div ref={containerRef} className="relative overflow-x-auto max-w-full py-2 scrollbar-none">
@@ -166,20 +167,20 @@ export default function SlidePulse({ onComplete, completedData, goNext }) {
             </div>
 
             <div className="flex items-center gap-2 text-xs">
-                <span>Меньше</span>
+                <Text className='text-xl pe-2'>{PULSE_LESS}</Text>
                 {['bg-text/[0.06]', 'bg-text/12', 'bg-text/25', 'bg-text/45', 'bg-text/70', 'bg-text'].map((cls, i) => (
                     <span key={i} className={`w-3 h-3 rounded-sm ${cls}`} />
                 ))}
-                <span>Больше</span>
+                <Text className='text-xl ps-2'>{PULSE_GREATER}</Text>
             </div>
+            <Text className="text-xl mt-2">{PULSE_DESCRIPTION}</Text>
 
-            {done && (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
-                    <Button data-no-tap-nav state={BUTTON_ACCENT} onClick={goNext}>
-                        {PULSE_NEXT}
-                    </Button>
-                </motion.div>
-            )}
+
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
+                <Button data-no-tap-nav state={BUTTON_ACCENT} onClick={goNext}>
+                    {PULSE_NEXT}
+                </Button>
+            </motion.div>
         </div>
     );
 }
