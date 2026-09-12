@@ -62,7 +62,7 @@ export const WHOMISSMORE_BUTTON_START = `Узнать!`
 
 // 6-й слайд - пульс отношений
 export const PULSE_TITLE = `Пульс Отношений`;
-export const PULSE_DESCRIPTION = `Здесь ты можешь навести на квадратик и увидеть, сколько мы общались в тот или иной день!`;
+export const PULSE_DESCRIPTION = `Пульс Отношений — это сетка нашей активности. Посмотри, в какие периоды мы общались больше, а в какие меньше.\nТы можешь навестись на квадратик, чтобы посмотреть статистику за день.`;
 export const PULSE_DAY = (day, messages) => `${day} мы отправили друг другу ${messages} сообщений!`
 export const PULSE_NEXT = `Что же дальше?`;
 export const PULSE_LESS = `Меньше`;
