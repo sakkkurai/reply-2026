@@ -110,7 +110,7 @@ export default function SlidePulse({ onComplete, completedData, goNext }) {
                     {monthLabels.map(({ weekIndex, label }) => (
                         <span
                             key={weekIndex}
-                            className="absolute text-xs whitespace-nowrap"
+                            className="absolute text-sm whitespace-nowrap font-script-caveat"
                             style={{ left: weekIndex * COL }}
                         >
                             {label}

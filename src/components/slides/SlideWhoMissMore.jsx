@@ -75,7 +75,7 @@ export default function SlideWhoMissesMore({ onComplete, completedData, goNext }
                             transition={{ delay: 1.1 }}
                             className="absolute left-4 top-1/2 -translate-y-1/2 font-bold"
                         >
-                            {herPct}%
+                            <Text>{herPct}%</Text>
                         </motion.span>
                         <motion.span
                             initial={{ opacity: 0 }}
@@ -83,7 +83,7 @@ export default function SlideWhoMissesMore({ onComplete, completedData, goNext }
                             transition={{ delay: 1.1 }}
                             className="absolute right-4 top-1/2 -translate-y-1/2 text-bg font-bold"
                         >
-                            {mePct}%
+                            <Text>{mePct}%</Text>
                         </motion.span>
                     </>
                 )}

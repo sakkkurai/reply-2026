@@ -84,13 +84,13 @@ export default function SlideHourPeek({ onComplete, completedData, goNext }) {
                                         <XAxis
                                             dataKey="hour"
                                             interval={0}
-                                            tick={{ fontSize: 11, fill: 'var(--color-text)' }}
+                                            tick={{ fontSize: 11, fontFamily: 'font-script-caveat', fill: 'var(--color-text)' }}
                                             axisLine={{ stroke: 'var(--color-text)', strokeOpacity: 0.3 }}
                                             tickLine={false}
                                         />
                                         <YAxis
                                             hide={false}
-                                            tick={{ fontSize: 11, fill: 'var(--color-text)' }}
+                                            tick={{ fontSize: 11, fontFamily: 'font-script-caveat', fill: 'var(--color-text)' }}
                                             axisLine={{ stroke: 'var(--color-text)', strokeOpacity: 0.3 }}
                                             tickLine={false}
                                         />
